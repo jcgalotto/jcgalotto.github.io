@@ -1,0 +1,138 @@
+@font-face {
+  font-family: 'Bangers', cursive;
+}
+
+body {
+    font-family: 'Bangers', cursive;
+    color: rgb(56, 56, 56);
+    margin: 10%;
+    margin-top: 1%;
+    background: rgb(250, 252, 250);
+    width: 80%;
+    height: 90%;
+}
+
+.ico {
+    padding-top: 25px;
+}
+
+.image {
+    margin: 5px;
+}
+
+header {
+    color: rgb(57, 58, 60);
+}
+header img{
+    width: 120px;
+    height: 120px;
+}
+
+h1 {
+    font-family: 'Bangers', cursive;
+
+}
+
+
+hr{
+  padding: 0.1em;
+  background: rgb(12, 13, 12);
+}
+.titulo {
+    margin-right: auto;
+}
+
+nav ul {
+    margin-top: 20px;
+}
+
+nav li {
+    display: inline;
+    font-size: 23px;
+
+    list-style-type: none;
+}
+
+nav li a {
+    color: #a7d1cb;
+    text-decoration: none;
+}
+
+li a:hover {
+    text-decoration: none;
+    color: white;
+    background: #DCE098;
+}
+.cuerpo img {
+
+ width: 80%;
+  height: 80%;
+  margin-top: 25px;
+  margin-left: 60px;
+  margin-bottom: 25px;
+
+}
+.cuerpo hr {
+  padding: 0px;
+}
+.cuerpo {
+    color: #eff1f4;
+    height: 60%;
+    margin: 1%;
+    font-size: 20px;
+}
+
+.contacto{
+
+  color: rgb(142, 136, 136);
+}
+
+h3 {
+    margin-bottom: 10px;
+}
+
+.galeria {
+
+    padding: 10px;
+    margin: 5px;
+}
+
+button {
+    border-radius: 0.6em;
+}
+
+.color {
+    color: #edefef;
+    font-size: 40px;
+}
+.social {
+  font-size: 80px;
+  margin: 25px;
+
+}
+.social a {
+  color: rgb(19, 20, 20);
+  padding: 25px;
+  
+  font-size: 60px;
+}
+
+.btn-group {
+    border-radius: 0.6em;
+}
+
+.form {
+    border: 2px;
+}
+
+legend {
+    color: #D7D7D7;
+}
+
+footer {
+
+
+
+    border-radius: 5% solid;
+    padding-right: 15px;
+}
