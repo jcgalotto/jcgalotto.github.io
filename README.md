@@ -1,4 +1,4 @@
-# 📊 EcoDashboard Mercosur
+# 📊 Calculo del Poder Adquisitivo USD PYG
 **Análisis de Poder Adquisitivo Real (Paraguay)**
 
 🚀 **Acceso en vivo:** [https://jcgalotto.github.io/](https://jcgalotto.github.io/)
