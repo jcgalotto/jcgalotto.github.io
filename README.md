@@ -72,4 +72,10 @@ PAP/
 *   **Caché:** Si realizas cambios en el código (`.js`), asegúrate de actualizar la versión en los imports de `index.html` (ej: `main.js?v=4`) para forzar la recarga en los navegadores de los usuarios.
 
 ---
-*Desarrollado para análisis financiero personal y proyección económica.*
+*Desarrollos para análisis financiero personal y proyección económica.*
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+Copyright (c) 2026 Julian C Galotto
