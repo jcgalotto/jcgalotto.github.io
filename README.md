@@ -1,6 +1,8 @@
 # 📊 EcoDashboard Mercosur
 **Análisis de Poder Adquisitivo Real (Paraguay)**
 
+🚀 **Acceso en vivo:** [https://jcgalotto.github.io/](https://jcgalotto.github.io/)
+
 Esta aplicación web es una herramienta financiera avanzada diseñada para calcular y visualizar la erosión del poder adquisitivo de ingresos en **Dólares (USD)** convertidos a **Guaraníes (PYG)**, ajustados por la inflación local (IPC) y la variación del tipo de cambio.
 
 ## 🚀 Características Principales
@@ -27,30 +29,20 @@ Esta aplicación web es una herramienta financiera avanzada diseñada para calcu
 
 No requiere instalación de dependencias complejas (como Node.js o NPM) para *ejecutarse*, ya que usa módulos JS nativos. Sin embargo, **necesitas un servidor web local** debido a las políticas de seguridad de CORS de los navegadores para módulos ES6.
 
-## ▶️ Cómo Ejecutar el Proyecto
+### Opción 1: GitHub Pages (Público)
+Simplemente accede a: [https://jcgalotto.github.io/](https://jcgalotto.github.io/)
 
-### Opción 1: Python (Recomendado / Preinstalado en mayoría de OS)
+### Opción 2: Python (Local)
 Si tienes Python instalado, abre una terminal en la carpeta del proyecto y ejecuta:
 
 ```bash
-# Python 3
 python -m http.server
-
-# O Python 2
-python -m SimpleHTTPServer
 ```
 Luego abre tu navegador en: `http://localhost:8000`
 
-### Opción 2: VS Code "Live Server"
-1.  Instala la extensión **Live Server** de Ritwick Dey en VS Code.
-2.  Haz clic derecho en `index.html`.
-3.  Selecciona **"Open with Live Server"**.
-
-### Opción 3: Node.js (http-server)
-Si prefieres usar Node.js:
-```bash
-npx http-server .
-```
+### Opción 3: VS Code "Live Server" (Local)
+1.  Haz clic derecho en `index.html`.
+2.  Selecciona **"Open with Live Server"**.
 
 ## 📂 Estructura del Proyecto
 

@@ -38,9 +38,9 @@ export class DatePicker {
                 <!-- Sidebar -->
                 <div class="date-sidebar">
                     <div style="font-size:0.75rem; color:#64748b; font-weight:700; margin-bottom:0.5rem; text-transform:uppercase;">Rápido</div>
-                    <button class="preset-btn" data-preset="12m">Últimos 12 Meses</button>
-                    <button class="preset-btn" data-preset="YTD">Año Actual (YTD)</button>
-                    <button class="preset-btn" data-preset="MAX">Todo (2022-Hoy)</button>
+                    <button type="button" class="preset-btn" data-preset="12m">Últimos 12 Meses</button>
+                    <button type="button" class="preset-btn" data-preset="YTD">Año Actual (YTD)</button>
+                    <button type="button" class="preset-btn" data-preset="MAX">Todo (2022-Hoy)</button>
                 </div>
                 
                 <div class="date-main">
@@ -51,9 +51,9 @@ export class DatePicker {
                             <div class="picker-col-title">DESDE</div>
                             <!-- Calendar Header -->
                             <div class="calendar-header-small">
-                                <button class="nav-btn-small" data-action="prev-start">‹</button>
+                                <button type="button" class="nav-btn-small" data-action="prev-start">‹</button>
                                 <span class="current-year">${this.yearStart}</span>
-                                <button class="nav-btn-small" data-action="next-start">›</button>
+                                <button type="button" class="nav-btn-small" data-action="next-start">›</button>
                             </div>
                             <!-- Months Grid -->
                             <div class="months-grid-small">
@@ -69,9 +69,9 @@ export class DatePicker {
                              <div class="picker-col-title">HASTA</div>
                             <!-- Calendar Header -->
                             <div class="calendar-header-small">
-                                <button class="nav-btn-small" data-action="prev-end">‹</button>
+                                <button type="button" class="nav-btn-small" data-action="prev-end">‹</button>
                                 <span class="current-year">${this.yearEnd}</span>
-                                <button class="nav-btn-small" data-action="next-end">›</button>
+                                <button type="button" class="nav-btn-small" data-action="next-end">›</button>
                             </div>
                             <!-- Months Grid -->
                             <div class="months-grid-small">
@@ -87,8 +87,8 @@ export class DatePicker {
                             <span id="selectionText" style="color:#4facfe; font-size:1.1rem;">...</span>
                         </div>
                         <div class="buttons-right">
-                            <button class="btn-cancel" id="btnCancel">Cancelar</button>
-                            <button class="btn-apply" id="btnApply">Aplicar Rango</button>
+                            <button type="button" class="btn-cancel" id="btnCancel">Cancelar</button>
+                            <button type="button" class="btn-apply" id="btnApply">Aplicar Rango</button>
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@ export class DatePicker {
         else if (isEnd) cssClass += ' is-end';
         else if (btnTime > startTime && btnTime < endTime) cssClass += ' in-range';
 
-        return `<button class="${cssClass}" data-type="${type}" data-month="${monthIndex}">${this.months[monthIndex]}</button>`;
+        return `<button type="button" class="${cssClass}" data-type="${type}" data-month="${monthIndex}">${this.months[monthIndex]}</button>`;
     }
 
     attachEvents() {
@@ -148,6 +148,7 @@ export class DatePicker {
         // Navigation Buttons (Prev/Next Year)
         this.container.querySelectorAll('.nav-btn-small').forEach(btn => {
             btn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const action = e.target.dataset.action;
                 if (action === 'prev-start') this.yearStart--;
                 if (action === 'next-start') this.yearStart++;
@@ -160,6 +161,7 @@ export class DatePicker {
         // Month Selection
         this.container.addEventListener('click', (e) => {
             if (e.target.classList.contains('month-btn-small')) {
+                e.stopPropagation();
                 const month = parseInt(e.target.dataset.month);
                 const type = e.target.dataset.type;
 
@@ -191,6 +193,7 @@ export class DatePicker {
         // Presets
         this.container.querySelectorAll('.preset-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const preset = e.target.dataset.preset;
                 const now = new Date();
 
