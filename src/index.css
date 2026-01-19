@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* PDF Export Overrides */
+.pdf-export-mode .grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 1rem !important;
+}
+
+.pdf-export-mode .lg\:col-span-2 {
+  grid-column: span 1 / span 1 !important;
+  width: 100% !important;
+}
+
+.pdf-export-mode .lg\:grid-cols-3,
+.pdf-export-mode .md\:grid-cols-2,
+.pdf-export-mode .lg\:grid-cols-4 {
+  grid-template-columns: 1fr !important;
+}
+
+/* PDF Export Overrides - Targeted at ReportTemplate */
+.pdf-charts-wrapper .grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2rem !important;
+}
+
+.pdf-charts-wrapper .lg\:col-span-2,
+.pdf-charts-wrapper .bg-white {
+  width: 100% !important;
+  border: 1px solid #e2e8f0;
+  /* Ensure borders are visible in print */
+  box-shadow: none !important;
+  /* Remove shadows for cleaner print */
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-800 font-sans;
+  }
+}

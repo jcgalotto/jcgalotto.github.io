@@ -5,16 +5,7 @@ export function formatNumber(num) {
     });
 }
 
-export function formatCurrency(num, currency = 'PYG') {
-    return new Intl.NumberFormat('es-PY', {
-        style: 'currency',
-        currency: currency,
-        minimumFractionDigits: 2
-    }).format(num);
-}
-
 export function formatMonthYear(monthStr) {
-    if (!monthStr) return '';
     const [year, month] = monthStr.split('-');
     const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
     return `${monthNames[parseInt(month) - 1]} ${year}`;
