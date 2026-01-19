@@ -45,8 +45,8 @@ export const inflationData = {
 export const API_SOURCES = {
     // Primary: Banco Central del Paraguay official website
     BCP_OFFICIAL: 'https://www.bcp.gov.py/webapps/web/cotizacion/monedas-mensual',
-    // Alternative: Frankfurter (ECB Data, No Key, Open Source)
-    EXCHANGERATE_API: 'https://api.frankfurter.app/latest?from=USD&to=PYG',
+    // Alternative: ExchangeRate-API (free tier available)
+    EXCHANGERATE_API: 'https://api.exchangerate-api.com/v4/latest/USD',
     // Alternative: Free Currency API
     CURRENCY_API: 'https://api.currencyapi.com/v3/latest'
 };

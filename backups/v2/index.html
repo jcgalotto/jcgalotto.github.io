@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoDashboard Mercosur - Análisis de Poder Adquisitivo</title>
+    <meta name="description"
+        content="Herramienta especializada en análisis de poder adquisitivo real para países del Mercosur">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-section">
+                <div class="logo-icon">📊</div>
+                <div>
+                    <h1 class="logo-title">EcoDashboard Mercosur</h1>
+                    <p class="logo-subtitle">Análisis de Poder Adquisitivo Real</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Input Form Section -->
+        <section class="input-section" id="inputSection">
+            <div class="form-card">
+                <h2 class="form-title">🔧 Configuración de Análisis</h2>
+                <p class="form-description">Ingrese los parámetros para calcular la variación del poder adquisitivo</p>
+
+                <form id="analysisForm" class="analysis-form">
+                    <div class="form-group">
+                        <label for="usdAmount">💵 Monto Mensual en USD</label>
+                        <input type="number" id="usdAmount" name="usdAmount" placeholder="Ej: 1000" required min="1"
+                            step="0.01" value="1000">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>📅 Rango de Fechas</label>
+                            <div id="datePickerContainer" class="datepicker-container"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <span>Generar Dashboard Completo</span>
+                            <span class="btn-icon">→</span>
+                        </button>
+                        <button type="button" id="btnExport" class="btn-secondary hidden">📄 Exportar PDF</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Dashboard Section (Initially Hidden) -->
+        <section class="dashboard-section hidden" id="dashboardSection">
+            <!-- Configuration Summary -->
+            <div class="summary-card">
+                <h2>🛠️ Resumen de Configuración</h2>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <span class="summary-label">Inversión Mensual:</span>
+                        <span class="summary-value" id="summaryUSD">$0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Ventana Temporal:</span>
+                        <span class="summary-value" id="summaryPeriod">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Fuente de Datos:</span>
+                        <span class="summary-value" id="dataSource">
+                            <span class="badge badge-static" id="dataSourceBadge">📊 Datos Históricos</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPIs Section -->
+            <div class="kpi-section">
+                <h2>📈 Indicadores Clave (KPIs)</h2>
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon">💹</div>
+                        <div class="kpi-content">
+                            <div class="kpi-label">Variación de Poder Adquisitivo</div>
+                            <div class="kpi-value" id="kpiVariation">-</div>
+                            <div class="kpi-status" id="kpiStatus">-</div>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon">🏦</div>
+                        <div class="kpi-content">
+                            <div class="kpi-label">Valor Inicial en PYG</div>
+                            <div class="kpi-value" id="kpiInitial">-</div>
+                            <div class="kpi-status">Base histórica</div>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon">💰</div>
+                        <div class="kpi-content">
+                            <div class="kpi-label">Valor Real Actualizado</div>
+                            <div class="kpi-value" id="kpiReal">-</div>
+                            <div class="kpi-status">Ajustado por Inflación</div>
+                        </div>
+                    </div>
+
+                    <!-- New KPI: Final Nominal Value -->
+                    <div class="kpi-card">
+                        <div class="kpi-icon">💵</div>
+                        <div class="kpi-content">
+                            <div class="kpi-label">Valor Nominal Final</div>
+                            <div class="kpi-value" id="kpiNominalFinal">-</div>
+                            <div class="kpi-status">Sin ajuste inflación</div>
+                        </div>
+                    </div>
+
+                    <!-- New KPI: Inflation Gap -->
+                    <div class="kpi-card">
+                        <div class="kpi-icon">✂️</div>
+                        <div class="kpi-content">
+                            <div class="kpi-label">Impacto Inflación (Pérdida)</div>
+                            <div class="kpi-value" id="kpiGap">-</div>
+                            <div class="kpi-status" id="kpiGapPercent">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exchange Rate Chart -->
+                <div class="chart-card">
+                    <h2>📊 Variación del Tipo de Cambio USD/PYG</h2>
+                    <div class="chart-container">
+                        <canvas id="exchangeRateChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- New Advanced Charts Grid -->
+                <div class="charts-grid">
+                    <!-- Comparative Chart (Start vs End) -->
+                    <div class="chart-card">
+                        <h2>⚖️ Poder Adquisitivo: Inicio vs Fin</h2>
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="comparisonChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Monthly Gap Chart -->
+                    <div class="chart-card">
+                        <h2>💸 Pérdida Acumulada (Brecha Real)</h2>
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="gapChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regional Comparison -->
+                <div class="regional-card">
+                    <h2>🌎 Comparativa Regional (Estabilidad del Dólar)</h2>
+                    <div class="regional-grid">
+                        <div class="regional-item">
+                            <div class="regional-flag">🇵🇾</div>
+                            <h3>Paraguay (PYG)</h3>
+                            <p id="regionalPY">-</p>
+                        </div>
+                        <div class="regional-item">
+                            <div class="regional-flag">🇦🇷</div>
+                            <h3>Argentina (ARS)</h3>
+                            <p id="regionalAR">-</p>
+                        </div>
+                        <div class="regional-item">
+                            <div class="regional-flag">🇧🇷</div>
+                            <h3>Brasil (BRL)</h3>
+                            <p id="regionalBR">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Breakdown Table -->
+                <div class="table-card">
+                    <h2>📝 Detailed Breakdown Table</h2>
+                    <div class="table-wrapper">
+                        <table class="data-table" id="breakdownTable">
+                            <thead>
+                                <tr>
+                                    <th>DATE</th>
+                                    <th>USD AMOUNT</th>
+                                    <th>EXCHANGE RATE<br>(USD/PYG)</th>
+                                    <th>NOMINAL PYG VALUE</th>
+                                    <th>CUMULATIVE INFLATION FACTOR<br>(FROM START)</th>
+                                    <th>REAL PYG VALUE<br>(ADJUSTED TO START PP)</th>
+                                    <th>REAL USD EQUIVALENT<br>(ADJUSTED TO START PP)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <!-- Table rows will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Technical Notes -->
+                <div class="notes-card">
+                    <h3>📌 Notas Técnicas</h3>
+                    <ul id="technicalNotes">
+                        <li>Los datos de tipo de cambio son obtenidos de fuentes oficiales del Banco Central del
+                            Paraguay.
+                        </li>
+                        <li>La inflación acumulada se calcula utilizando el Índice de Precios al Consumidor (IPC)
+                            oficial.
+                        </li>
+                    </ul>
+                </div>
+        </section>
+
+        <!-- Loading Indicator -->
+        <div class="loading-overlay hidden" id="loadingOverlay">
+            <div class="loading-spinner"></div>
+            <p>Procesando datos y generando análisis...</p>
+        </div>
+    </div>
+
+    <script type="module" src="src/main.js"></script>
+</body>
+
+</html>
